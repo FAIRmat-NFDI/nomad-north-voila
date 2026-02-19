@@ -1,33 +1,55 @@
-ARG IMAGE_TAG=main
-ARG BASE_IMAGE=ghcr.io/fairmat-nfdi/nomad-north-jupyter
+ARG IMAGE_TAG=lab-4.5.4
+ARG BASE_IMAGE=quay.io/jupyter/datascience-notebook
+ARG UV_VERSION=0.9
 ARG PLUGIN_NAME=nomad-north-voila
+
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv_stage
 
 FROM ${BASE_IMAGE}:${IMAGE_TAG} AS base
 
-# This Dockerfile intentionally only selects a NORTH base image.
-#
-# Its purpose is to provide a minimal and reproducible starting point for
-# building a custom NOMAD NORTH tool image. The base image already contains
-# the complete NORTH runtime environment (e.g. JupyterLab or desktop setup),
-# while this repository defines where tool-specific extensions should be added.
-#
-# By default, the resulting image is identical to the selected base image.
-# Users are expected to extend this Dockerfile to install their plugin and
-# add any additional dependencies or configuration required by the tool.
-#
-# Base image selection:
-#   - Jupyter-based tools:
-#       BASE_IMAGE=ghcr.io/fairmat-nfdi/nomad-north-jupyter
-#   - Tools requiring a graphical user interface:
-#       BASE_IMAGE=ghcr.io/fairmat-nfdi/nomad-north-desktop-base
-#
-# Extend this Dockerfile to:
-#   - install your plugin
-#   - add additional system or Python dependencies
-#   - add tool-specific configuration
-#
-# Reference implementations of NORTH base images:
-#   nomad-north-jupyter:
-#     https://github.com/FAIRmat-NFDI/nomad-north-jupyter/blob/main/src/nomad_north_jupyter/north_tools/my_north_tool/Dockerfile
-#   nomad-north-desktop-base:
-#     https://github.com/FAIRmat-NFDI/nomad-north-desktop-base/blob/main/Dockerfile
+# https://github.com/hadolint/hadolint/wiki/DL4006
+# https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+COPY --from=uv_stage /uv /uvx /bin/
+
+USER root
+
+# Define environment variables
+# With pre-existing NB_USER="jovyan" and NB_UID=100, NB_GID=1000
+ENV HOME=/home/${NB_USER}
+ENV CONDA_DIR=/opt/conda
+
+ARG PLUGIN_NAME
+
+RUN apt-get update \
+ && apt-get install --yes --quiet --no-install-recommends \
+      libmagic-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+USER ${NB_USER}
+
+# uv env
+ENV UV_PROJECT_ENVIRONMENT=${CONDA_DIR} \
+    UV_LINK_MODE=copy \
+    UV_NO_CACHE=1 \
+    UV_SYSTEM_PYTHON=1
+
+WORKDIR ${HOME}/${PLUGIN_NAME}
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --group north --inexact --no-install-project
+
+WORKDIR ${HOME}
+RUN rm -rf ${HOME}/${PLUGIN_NAME}
+
+# RUN jupyter lab build --dev-build=False --minimize=False && \
+#     fix-permissions "/home/${NB_USER}" \
+#     && fix-permissions "${CONDA_DIR}"
+
+WORKDIR ${HOME}
+
+EXPOSE 8888
+
+RUN touch ${HOME}/.hushlogin
