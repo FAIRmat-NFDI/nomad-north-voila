@@ -25,7 +25,8 @@ ARG PLUGIN_NAME
 RUN apt-get update \
  && apt-get install --yes --quiet --no-install-recommends \
       libmagic-dev \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/*
 
 USER ${NB_USER}
 
