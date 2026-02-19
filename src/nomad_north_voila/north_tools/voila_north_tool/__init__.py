@@ -15,9 +15,9 @@ voila_north_tool = NORTHTool(
     path_prefix='lab/tree',
     privileged=False,
     with_path=True,
-    display_name='voila_north_tool',
+    display_name='voila',
 )
 
 north_tool_entry_point = NorthToolEntryPoint(
-    id_url_safe='nomad_north_voila_voila_north_tool', north_tool=voila_north_tool
+    id_url_safe='voila_north_tool', north_tool=voila_north_tool
 )

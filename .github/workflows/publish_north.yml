@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_TAG: main
+  IMAGE_TAG: lab-4.5.4
   NORTH_TOOL_DIR: src/nomad_north_voila/north_tools/voila_north_tool
 
 permissions:

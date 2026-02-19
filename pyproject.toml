@@ -46,13 +46,22 @@ dev = [
 north = [
     "jupyterlab",
     "ipywidgets",
+    "voila",
+    "ipyaggrid",
+    "ipysheet",
+    "ipydatagrid",
+    "jupyter-flex",
+    "baybe",
+    "pyvis",
+    "lmfit",
 ]
+    # "hzb-combinatorial-libraries @ git+https://github.com/nomad-hzb/hzb-combinatorial-libraries-plugin.git"
 
 [tool.uv]
 extra-index-url = [
   "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple",
 ]
-    
+
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -133,11 +142,6 @@ package-dir = { "" = "src" }
 where = ["src"]
 
 [project.entry-points.'nomad.plugin']
-
-
-
-
-
 
 north_tool_entry_point = "nomad_north_voila.north_tools.voila_north_tool:north_tool_entry_point"
 [tool.cruft]
