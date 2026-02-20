@@ -14,7 +14,7 @@ classifiers = [
 ]
 name = "nomad-north-voila"
 description = "A voila web application from Jupyter Notebook."
-version = "0.1.0"
+dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
@@ -130,6 +130,10 @@ skip-magic-trailing-comma = false
 
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+local_scheme = "node-and-date"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
