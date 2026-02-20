@@ -50,7 +50,7 @@ north = [
     "ipyaggrid",
     "ipysheet",
     "ipydatagrid",
-    "jupyter-flex",
+    "jupyter-flex"
 ]
 
 [tool.uv]
@@ -131,19 +131,19 @@ skip-magic-trailing-comma = false
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
 
-[tool.setuptools_scm]
-version_scheme = "no-guess-dev"
-local_scheme = "node-and-date"
-
 [tool.setuptools]
 package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[project.entry-points.'nomad.plugin']
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+local_scheme = "node-and-date"
 
+[project.entry-points.'nomad.plugin']
 north_tool_entry_point = "nomad_north_voila.north_tools.voila_north_tool:north_tool_entry_point"
+
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues
 skip = [".github/*"]
