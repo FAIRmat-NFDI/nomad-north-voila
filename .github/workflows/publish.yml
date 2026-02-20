@@ -22,30 +22,6 @@ jobs:
                   python-version: ${{ env.python-version }}
             - name: Build package
               run: uv build
-            - name: Upload dist artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: dist-artifacts
-                  path: dist/
 
-    deploy:
-        name: Upload to PyPI
-        needs: build
-        runs-on: ubuntu-latest
-        environment:
-            name: pypi
-            url: https://pypi.org/p/nomad-north-jupyter
-        permissions:
-            id-token: write
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  submodules: recursive
-            - name: Download dist artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  name: dist-artifacts
-                  path: dist/
             - name: Publish package distributions to PyPI
               uses: pypa/gh-action-pypi-publish@release/v1
