@@ -36,21 +36,22 @@ ENV UV_PROJECT_ENVIRONMENT=${CONDA_DIR} \
     UV_NO_CACHE=1 \
     UV_SYSTEM_PYTHON=1
 
+COPY --chown=${NB_USER}:${NB_GID} . ${HOME}/${PLUGIN_NAME}
+
 WORKDIR ${HOME}/${PLUGIN_NAME}
 
+# https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
+# Install dependencies
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --group north --inexact --no-install-project
 
 WORKDIR ${HOME}
 RUN rm -rf ${HOME}/${PLUGIN_NAME}
 
-# RUN jupyter lab build --dev-build=False --minimize=False && \
-#     fix-permissions "/home/${NB_USER}" \
-#     && fix-permissions "${CONDA_DIR}"
+RUN jupyter lab build --dev-build=False --minimize=False && \
+    fix-permissions "/home/${NB_USER}" \
+    && fix-permissions "${CONDA_DIR}"
 
 WORKDIR ${HOME}
-
-EXPOSE 8888
 
 RUN touch ${HOME}/.hushlogin
