@@ -51,11 +51,7 @@ north = [
     "ipysheet",
     "ipydatagrid",
     "jupyter-flex",
-    "baybe",
-    "pyvis",
-    "lmfit",
 ]
-    # "hzb-combinatorial-libraries @ git+https://github.com/nomad-hzb/hzb-combinatorial-libraries-plugin.git"
 
 [tool.uv]
 extra-index-url = [
