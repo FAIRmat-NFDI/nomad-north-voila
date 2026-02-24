@@ -44,13 +44,14 @@ dev = [
 ]
 [dependency-groups]
 north = [
-    "jupyterlab",
+    # According to the base image ensure compatibility of other dependencies with this version
+    "jupyterlab==3.6.2",
     "ipywidgets",
     "voila",
     "ipyaggrid",
     "ipysheet",
     "ipydatagrid",
-    "jupyter-flex"
+    "jupyter-flex",
 ]
 
 [tool.uv]

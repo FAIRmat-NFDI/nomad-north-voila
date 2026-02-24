@@ -1,5 +1,5 @@
-ARG IMAGE_TAG=lab-4.5.4
-ARG BASE_IMAGE=quay.io/jupyter/datascience-notebook
+ARG IMAGE_TAG=lab-3.6.2
+ARG BASE_IMAGE=jupyter/datascience-notebook
 ARG UV_VERSION=0.9
 ARG PLUGIN_NAME=nomad-north-voila
 
@@ -28,20 +28,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/*
 
- # Needed to build jupyter-lab
- # Add NodeSource APT repo for Debian-base distributions repository
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
-
-# Install Node.js from the Debian-based distributions repository
-RUN apt-get install nodejs -y \
-       && npm install -g configurable-http-proxy@^4.2.0 \
-       # clean cache and logs
-       && rm -rf /var/lib/apt/lists/* /var/log/* /var/tmp/* ~/.npm
-
 USER ${NB_USER}
-# To open voila preview on side panel in jupyterlab
-RUN npm i @voila-dashboards/jupyterlab-preview
-
 
 # uv env
 ENV UV_PROJECT_ENVIRONMENT=${CONDA_DIR} \
@@ -60,13 +47,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 WORKDIR ${HOME}
 RUN rm -rf ${HOME}/${PLUGIN_NAME}
-
-RUN jupyter server extension enable voila
-
-RUN jupyter lab build --dev-build=False --minimize=False
-
-# After build remove node_modules and package-lock.json to reduce image size, as they are not needed at runtime
-RUN rm -rf ${HOME}/node_modules package-lock.json package.json
 
 RUN fix-permissions "/home/${NB_USER}" \
     && fix-permissions "${CONDA_DIR}"
