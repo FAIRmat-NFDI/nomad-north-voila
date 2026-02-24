@@ -16,9 +16,10 @@ from nomad.config.models.north import NORTHTool
 from nomad.config.models.plugins import NorthToolEntryPoint
 
 voila_tool = NORTHTool(
-    short_description='Voila application server in NOMAD NORTH for NOMAD plugin nomad-north-voila.',
+    short_description='voila, a Jupyter extension, in NOMAD NORTH integrated by NOMAD plugin nomad-north-voila.',
     image='ghcr.io/FAIRmat-NFDI/nomad-north-voila:latest',
-    description='Voila application server in NOMAD NORTH for NOMAD plugin nomad-north-voila.',
+    description="""### **voila**: Software package for voila to render Jupyter notebooks as standalone web applications
+    or interactive widgets for data analysis and visualization. [Homepage](https://voila.readthedocs.io/en/stable/).""",
     external_mounts=[],
     file_extensions=['ipynb'],
     icon='logo/jupyter.svg',
