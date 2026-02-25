@@ -50,7 +50,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/nomad_north_voila/north_tools/voila/__init__.py
-          git commit -m "chore: update image tag to ${{ steps.tag.outputs.TAG }}"
+          git commit -m "Update tag of voila image to ${{ steps.tag.outputs.TAG }}"
           git push origin main
 
   build:
