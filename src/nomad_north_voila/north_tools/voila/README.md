@@ -4,22 +4,7 @@ This directory contains the configuration and a minimal Dockerfile template for 
 
 ## Quick start
 
-The voila NORTH tool provides a Voila-based environment defined in `NORTHTool`, `NorthToolEntryPoint`, and Dockerfile.
-
-## Base Image
-
-This tool uses a pre-built base image that includes the NOMAD NORTH environment. You can choose between two base images:
-
-1. **nomad-north-jupyter** — JupyterLab-based environment
-   - Repository: https://github.com/FAIRmat-NFDI/nomad-north-jupyter
-   - Image: `ghcr.io/fairmat-nfdi/nomad-north-jupyter:main`
-
-2. **nomad-north-desktop-base** — Desktop-based environment
-   - Repository: https://github.com/FAIRmat-NFDI/nomad-north-desktop-base
-   - Image: `ghcr.io/fairmat-nfdi/nomad-north-desktop-base:main`
-
-Select the appropriate base image for your use case. The nomad-north-voila plugin can be installed on top of your chosen base image during the Docker build process (for this you need to extend the Dockerfile).
-
+The voila NORTH tool provides a Voilà-based environment defined in `NORTHTool`, a `NorthToolEntryPoint`, and a Dockerfile.
 
 ## Building and testing
 

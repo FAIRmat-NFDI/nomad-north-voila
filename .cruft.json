@@ -9,7 +9,7 @@
       "github_username": "FAIRmat-NFDI",
       "plugin_name": "nomad-north-voila",
       "module_name": "nomad_north_voila",
-      "short_description": "NOMAD NORTH plugin for voila",
+      "short_description": "NOMAD NORTH plugin for Voilà",
       "version": "0.1.0",
       "license": "Apache 2.0",
       "include_schema_package": false,
