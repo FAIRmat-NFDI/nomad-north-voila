@@ -18,7 +18,9 @@ dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-    { name = "NOMAD Authors", email = "fairmat@physik.hu-berlin.de" },
+    { name = "Rubel Mozumder", email = "rubel.mozumder@physik.hu-berlin.de" },
+    { name = "Markus Kühbach", email = "markus.kuehbach@physik.hu-berlin.de" },
+    { name = "Lukas Pielsticker", email = "lukas.pielsticker@physik.hu-berlin.de" },
 ]
 maintainers = [
     { name = "NOMAD Authors", email = "fairmat@physik.hu-berlin.de" },
