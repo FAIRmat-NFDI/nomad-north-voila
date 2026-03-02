@@ -4,6 +4,9 @@ on:
     release:
         types: [published]
 
+permissions:
+    id-token: write
+
 env:
     PYTHON-VERSION: 3.12
     WAIT-TIME: 1800 # 30 minutes in seconds
@@ -89,10 +92,6 @@ jobs:
         permissions:
             id-token: write
         steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  submodules: recursive
             - name: Download dist artifacts
               uses: actions/download-artifact@v4
               with:
