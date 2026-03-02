@@ -80,6 +80,9 @@ jobs:
                     exit 1
                   fi
 
+                  # Remove the unzipped package after checking
+                  rm -rf dist/nomad_north_voila-*/
+
             - name: Upload dist artifacts
               uses: actions/upload-artifact@v4
               with:
