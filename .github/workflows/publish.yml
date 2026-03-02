@@ -62,11 +62,8 @@ jobs:
 
             - name: build package
               run: |
-                  #   IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" src/nomad_north_voila/north_tools/voila/__init__.py)
-
-
-                    # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
-                    SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
+                  # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
+                  SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
             - name: Check the image tag in the entry point
               run: |
                   # un zip the built package and check the image tag in the entry point
