@@ -6,9 +6,8 @@ on:
 
 env:
     PYTHON-VERSION: 3.12
-    WAIT-TIME: 1800 # 0.5 hour in seconds
-    CHECK-INTERVAL: 300 # 5 minutes in seconds
-    ELAPSED-TIME: 0
+    WAIT-TIME: 1800 # 30 minutes in seconds
+    CHECK-INTERVAL: 120 # 2 minutes in seconds
     IMAGE: "ghcr.io/fairmat-nfdi/nomad-north-voila"
 jobs:
     check-if-image-exists:
@@ -19,6 +18,7 @@ jobs:
               run: |
                   FULL_IMAGE="${{ env.IMAGE }}:${GITHUB_REF_NAME}"
                   echo "Checking for the image ${FULL_IMAGE} to be available..."
+                  ELAPSED_TIME=0
 
                   while true; do
                     if docker manifest inspect ${FULL_IMAGE} > /dev/null 2>&1; then
@@ -26,12 +26,12 @@ jobs:
                       exit 0
                     fi
 
-                    if [[ ${{ env.ELAPSED-TIME }} -ge ${{ env.WAIT-TIME }} ]]; then
+                    if [[ ${ELAPSED_TIME} -ge ${{ env.WAIT-TIME }} ]]; then
                       echo "Timeout reached (${{ env.WAIT-TIME }} seconds). Image ${FULL_IMAGE} not found!"
                       exit 1
                     fi
 
-                    echo "Image not found yet. Retrying in ${{ env.CHECK-INTERVAL }} seconds... (${{ env.ELAPSED-TIME }}s / ${{ env.WAIT-TIME }}s elapsed)"
+                    echo "Image not found yet. Retrying in ${{ env.CHECK-INTERVAL }} seconds... (${ELAPSED_TIME}s / ${{ env.WAIT-TIME }}s elapsed)"
                     sleep ${{ env.CHECK-INTERVAL }}
                     ELAPSED_TIME=$((ELAPSED_TIME + ${{ env.CHECK-INTERVAL }}))
                   done
@@ -61,18 +61,23 @@ jobs:
               run: |
                   IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" src/nomad_north_voila/north_tools/voila/__init__.py)
 
-                  if [[ "${IMAGE_TAG}" != "${GITHUB_REF_NAME}" ]]; then
-                    echo "Error: Image tag in __init__.py does not match the expected tag ${{ env.IMAGE }}:${GITHUB_REF_NAME}."
+                  if [[ "${IMAGE_TAG}" == "${GITHUB_REF_NAME}" ]]; then
+                    echo "Before building the Python package, image ${{ env.IMAGE }}:${GITHUB_REF_NAME} is updated for NORTH tool."
+                  else
+                    echo "Error: Image tag in __init__.py is not correct: ${IMAGE_TAG}. Expected: ${{ env.IMAGE }}:${GITHUB_REF_NAME}"
                     exit 1
                   fi
 
-                  uv build
+                  # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
+                  SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
 
             - name: Upload dist artifacts
               uses: actions/upload-artifact@v4
               with:
                   name: dist-artifacts
                   path: dist/
+            - name: Publish package distributions to PyPI
+              uses: pypa/gh-action-pypi-publish@release/v1
 
     deploy:
         name: Upload to PyPI
