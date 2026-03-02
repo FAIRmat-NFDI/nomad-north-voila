@@ -112,6 +112,14 @@ We now recommend using the dedicated [`nomad-distro-dev`](https://github.com/FAI
 
 We use [`cruft`](https://github.com/cruft/cruft) to update the project based on template changes. To run the check for updates locally, run `cruft update` in the root of the project. More details see the instructions on [`cruft` website](https://cruft.github.io/cruft/#updating-a-project).
 
+## Publish note
+In iour Python package publishing workflow, before building the package, we update the image tag in the [NORTHTool](./src/nomad_north_voila/north_tools/voila/__init__.py) entry point to the latest release version of the image (e.g., `v0.1.5`), and then publish the package to PyPI.
+
+However, the updated image tag in `NORTHTool` is not pushed back to the GitHub repository. Therefore, the image tag in the GitHub repository always remains set to `main`, even when you check out a specific release tag. For this reason, we recommend installing the plugin from [PyPI](https://pypi.org/project/nomad-north-voila/), where the entry point always contains the correct image tag corresponding to the release.
+
+If you download a ZIP file of a specific release from GitHub, the image tag in the entry point will still be set to `main`, which is not correct. In that case, you can either manually update the image tag in the entry point to the correct release version (e.g., `v0.1.5`), or install the plugin directly from PyPI.
+
+
 ## Main contributors
 | Name | E-mail     |
 |------|------------|
