@@ -64,11 +64,12 @@ jobs:
               run: |
                   # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
                   SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
+
             - name: Check the image tag in the entry point
               run: |
                   # un zip the built package and check the image tag in the entry point
                   tar -xzf dist/*.tar.gz -C dist/
-                  IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" dist/nomad_north_voila-*/nomad_north_voila/north_tools/voila/__init__.py)
+                  IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" dist/nomad_north_voila-*/src/nomad_north_voila/north_tools/voila/__init__.py)
 
                   if [[ "${IMAGE_TAG}" == "${GITHUB_REF_NAME}" ]]; then
                     echo "Before building the Python package, image ${{ env.IMAGE }}:${GITHUB_REF_NAME} is updated for NORTH tool."
