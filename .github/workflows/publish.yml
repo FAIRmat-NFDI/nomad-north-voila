@@ -60,9 +60,18 @@ jobs:
                   sed -i "s|${{ env.IMAGE }}:${IMAGE_TAG}|${{ env.IMAGE }}:${GITHUB_REF_NAME}|g" \
                   src/nomad_north_voila/north_tools/voila/__init__.py
 
-            - name: Check image tag and build package
+            - name: build package
               run: |
-                  IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" src/nomad_north_voila/north_tools/voila/__init__.py)
+                  #   IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" src/nomad_north_voila/north_tools/voila/__init__.py)
+
+
+                    # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
+                    SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
+            - name: Check the image tag in the entry point
+              run: |
+                  # un zip the built package and check the image tag in the entry point
+                  tar -xzf dist/*.tar.gz -C dist/
+                  IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" dist/nomad_north_voila-*/nomad_north_voila/north_tools/voila/__init__.py)
 
                   if [[ "${IMAGE_TAG}" == "${GITHUB_REF_NAME}" ]]; then
                     echo "Before building the Python package, image ${{ env.IMAGE }}:${GITHUB_REF_NAME} is updated for NORTH tool."
@@ -70,9 +79,6 @@ jobs:
                     echo "Error: Image tag in __init__.py is not correct: ${IMAGE_TAG}. Expected: ${{ env.IMAGE }}:${GITHUB_REF_NAME}"
                     exit 1
                   fi
-
-                  # Use SETUPTOOLS_SCM_PRETEND_VERSION to skip the version check due to image_tag modification of the __init__.py file
-                  SETUPTOOLS_SCM_PRETEND_VERSION=${GITHUB_REF_NAME#v} uv build
 
             - name: Upload dist artifacts
               uses: actions/upload-artifact@v4
