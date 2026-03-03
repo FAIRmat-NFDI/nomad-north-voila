@@ -20,7 +20,7 @@ jobs:
             - name: Check if image exists in GitHub Container Registry
               run: |
                   FULL_IMAGE="${{ env.IMAGE }}:${GITHUB_REF_NAME}"
-                  echo "Checking for the image ${FULL_IMAGE} to be available..."
+                  echo "Checking if image ${FULL_IMAGE} is available..."
                   ELAPSED_TIME=0
 
                   while true; do
