@@ -110,7 +110,7 @@ ignore = [
     "F403", # 'from module import *' used; unable to detect undefined names
     "PLC0415", # `import` should be at the top-level of a file
     "E501", # line too long
-    "PLR1714", # Repeated-equality-comparison.
+    "PLR1714", # repeated-equality-comparison
 ]
 
 fixable = ["ALL"]
