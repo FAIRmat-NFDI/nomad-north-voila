@@ -4,6 +4,8 @@ on:
   # workflow_dispatch:
   workflow_run:
     workflows: ["Build and publish docker images"]
+    branches:
+      - v*.*.* # Only triggers if publish north runs on a tag matching the pattern v*.*.*
     types:
       - completed
 
