@@ -3,7 +3,7 @@ name: Upload Python Package
 on:
   # workflow_dispatch:
   workflow_run:
-    workflows: ["publish_north"]
+    workflows: ["publish north"]
     types:
       - completed
 
