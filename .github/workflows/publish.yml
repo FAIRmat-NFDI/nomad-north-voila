@@ -1,7 +1,11 @@
 name: Upload Python Package
 
 on:
-  workflow_dispatch:
+  # workflow_dispatch:
+  workflow_run:
+    workflows: ["publish_north"]
+    types:
+      - completed
 
 env:
   PYTHON_VERSION: 3.12
@@ -10,36 +14,36 @@ env:
   IMAGE: "ghcr.io/fairmat-nfdi/nomad-north-voila"
 
 jobs:
-  check-if-image-exists:
-    name: Check image in GitHub Container Registry
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check if image exists in GitHub Container Registry
-        run: |
-          FULL_IMAGE="${{ env.IMAGE }}:${GITHUB_REF_NAME}"
-          echo "Checking if image ${FULL_IMAGE} is available..."
-          ELAPSED_TIME=0
+  # check-if-image-exists:
+  #   name: Check image in GitHub Container Registry
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check if image exists in GitHub Container Registry
+  #       run: |
+  #         FULL_IMAGE="${{ env.IMAGE }}:${GITHUB_REF_NAME}"
+  #         echo "Checking if image ${FULL_IMAGE} is available..."
+  #         ELAPSED_TIME=0
 
-          while true; do
-            if docker manifest inspect ${FULL_IMAGE} > /dev/null 2>&1; then
-              echo "Image ${FULL_IMAGE} found successfully!"
-              exit 0
-            fi
+  #         while true; do
+  #           if docker manifest inspect ${FULL_IMAGE} > /dev/null 2>&1; then
+  #             echo "Image ${FULL_IMAGE} found successfully!"
+  #             exit 0
+  #           fi
 
-            if [[ ${ELAPSED_TIME} -ge ${{ env.WAIT_TIME }} ]]; then
-              echo "Timeout reached (${{ env.WAIT_TIME }} seconds). Image ${FULL_IMAGE} not found!"
-              exit 1
-            fi
+  #           if [[ ${ELAPSED_TIME} -ge ${{ env.WAIT_TIME }} ]]; then
+  #             echo "Timeout reached (${{ env.WAIT_TIME }} seconds). Image ${FULL_IMAGE} not found!"
+  #             exit 1
+  #           fi
 
-            echo "Image not found yet. Retrying in ${{ env.CHECK_INTERVAL }} seconds... (${ELAPSED_TIME}s / ${{ env.WAIT_TIME }}s elapsed)"
-            sleep ${{ env.CHECK_INTERVAL }}
-            ELAPSED_TIME=$((ELAPSED_TIME + ${{ env.CHECK_INTERVAL }}))
-          done
+  #           echo "Image not found yet. Retrying in ${{ env.CHECK_INTERVAL }} seconds... (${ELAPSED_TIME}s / ${{ env.WAIT_TIME }}s elapsed)"
+  #           sleep ${{ env.CHECK_INTERVAL }}
+  #           ELAPSED_TIME=$((ELAPSED_TIME + ${{ env.CHECK_INTERVAL }}))
+  #         done
 
   build:
     name: Build Package
     runs-on: ubuntu-latest
-    needs: check-if-image-exists
+    # needs: check-if-image-exists
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,7 +68,7 @@ jobs:
 
       - name: Check the image tag in the entry point
         run: |
-          # un zip the built package and check the image tag in the entry point
+          # unzip the built package and check the image tag in the entry point
           tar -xzf dist/*.tar.gz -C dist/
           IMAGE_TAG=$(grep -oP "${{ env.IMAGE }}:\K[^'\",]+" dist/nomad_north_voila-*/src/nomad_north_voila/north_tools/voila/__init__.py)
 
