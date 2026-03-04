@@ -6,6 +6,7 @@ on:
 
 env:
   PYTHON_VERSION: 3.12
+  IMAGE: "ghcr.io/fairmat-nfdi/nomad-north-voila"
 
 jobs:
   build-docker-image:
