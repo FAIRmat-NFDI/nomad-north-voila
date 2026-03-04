@@ -3,7 +3,7 @@ name: Upload Python Package
 on:
   # workflow_dispatch:
   workflow_run:
-    workflows: ["publish north"]
+    workflows: ["Build and publish docker images"]
     types:
       - completed
 
