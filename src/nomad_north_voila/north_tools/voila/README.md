@@ -12,13 +12,13 @@ Build the Docker image locally:
 
 ```bash
 docker build -f src/nomad_north_voila/north_tools/voila/Dockerfile \
-    -t ghcr.io/FAIRmat-NFDI/nomad-north-voila:latest .
+    -t ghcr.io/fairmat-nfdi/nomad-north-voila:v0.1.5 .
 ```
 
 Test the image (Voila server):
 
 ```bash
-docker run -p 8888:8888 ghcr.io/FAIRmat-NFDI/nomad-north-voila:latest
+docker run -p 8888:8888 ghcr.io/fairmat-nfdi/nomad-north-voila:v0.1.5
 ```
 
 Access the service at `http://localhost:8888`.
