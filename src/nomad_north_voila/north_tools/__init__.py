@@ -33,4 +33,6 @@ voila_north_tool = NORTHTool(
     display_name='voilà',
 )
 
-voila = NorthToolEntryPoint(id_url_safe='north_tool_voila', north_tool=voila_north_tool)
+voila_entry_point = NorthToolEntryPoint(
+    id_url_safe='voila', north_tool=voila_north_tool
+)
