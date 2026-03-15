@@ -18,13 +18,13 @@ plugins = [
 
 By adding this plugin, the `voila` NORTH tool will become available in the `NORTH` tools registry of the NOMAD Oasis.
 
-By default this plugin is configured to use a generic Jupyter environment with voila installed, but you can also switch to a specific image tag using `nomad.yaml` configuration file:
+By including `nomad-north-voila` plugin, a `voila` Jupyter environment with specific image tag (according to the Python package version) will be available in NORTH tools, but you can also switch to a specific `nomad-north-voila` image tag or different image using `nomad.yaml` configuration file:
 
 ```yaml
 plugins:
   entry_points:
     options:
-      nomad_north_voila.north_tools.voila:
+      nomad_north_voila.north_tools.voila_entry_point:
         north_tool:
           image: ghcr.io/fairmat-nfdi/nomad-north-voila:<image-tag>
 ```
