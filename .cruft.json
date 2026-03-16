@@ -19,7 +19,7 @@
       "include_example_uploads": false,
       "include_action": false,
       "include_north_tools": true,
-      "north_tool_name": "voila",
+      "north_tool_name": "voila_north_tool",
       "_copy_without_render": ["*.html"],
       "_template": "https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin",
       "_commit": "521583b3e8b972c0c693a8735575cca0f100983e"
