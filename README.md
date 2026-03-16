@@ -4,6 +4,31 @@ A voila web application from Jupyter Notebook.
 
 This `nomad` plugin was generated with `Cookiecutter` along with `@nomad`'s [`cookiecutter-nomad-plugin`](https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin) template.
 
+## Quickstart
+
+This plugin is available in PyPI under the name `nomad-north-voila`. To install this plugin into a NOMAD Oasis, add the following to your `pyproject.toml`:
+
+```toml
+[project.optional-dependencies]
+plugins = [
+  "nomad-north-voila",
+  ...
+]
+```
+
+By adding this plugin, the `voila` NORTH tool will become available in the `NORTH` tools registry of the NOMAD Oasis.
+
+By including `nomad-north-voila` plugin, a `voila` Jupyter environment with specific image tag (according to the Python package version) will be available in NORTH tools, but you can also switch to a specific `nomad-north-voila` image tag or different image using `nomad.yaml` configuration file:
+
+```yaml
+plugins:
+  entry_points:
+    options:
+      nomad_north_voila.north_tools.voila_entry_point:
+        north_tool:
+          image: ghcr.io/fairmat-nfdi/nomad-north-voila:<image-tag>
+```
+
 ## Development
 
 If you want to develop locally this plugin, clone the project and in the plugin folder, create a virtual environment (you can use Python 3.10, 3.11 or 3.12):

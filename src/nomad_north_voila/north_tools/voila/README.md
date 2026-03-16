@@ -4,7 +4,7 @@ This directory contains the configuration and a minimal Dockerfile template for 
 
 ## Quick start
 
-The voila NORTH tool provides a Voilà-based environment defined in `NORTHTool`, a `NorthToolEntryPoint`, and a Dockerfile.
+The voila NORTH tool provides a Voilà-based environment defined in `NORTHTool`, a `NORTHToolEntryPoint`, and a Dockerfile.
 
 ## Building and testing
 
