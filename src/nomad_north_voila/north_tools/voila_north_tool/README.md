@@ -11,7 +11,7 @@ The voila NORTH tool provides a Voilà-based environment defined in `NORTHTool`,
 Build the Docker image locally:
 
 ```bash
-docker build -f src/nomad_north_voila/north_tools/voila/Dockerfile \
+docker build -f src/nomad_north_voila/north_tools/voila_north_tool/Dockerfile \
     -t ghcr.io/FAIRmat-NFDI/nomad-north-voila:latest .
 ```
 

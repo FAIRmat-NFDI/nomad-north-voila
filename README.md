@@ -24,7 +24,7 @@ By including `nomad-north-voila` plugin, a `voila` container with a specific ima
 plugins:
   entry_points:
     options:
-      nomad_north_voila.north_tools.voila_entry_point:
+      nomad_north_voila.north_tools.voila:
         north_tool:
           image: ghcr.io/fairmat-nfdi/nomad-north-voila:<image-tag>
 ```
