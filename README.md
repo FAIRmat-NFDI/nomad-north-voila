@@ -18,7 +18,7 @@ plugins = [
 
 By adding this plugin, the `voila` NORTH tool will become available in the `NORTH` tools registry of the NOMAD Oasis.
 
-By including `nomad-north-voila` plugin, a `voila` Jupyter environment with specific image tag (according to the Python package version) will be available in NORTH tools, but you can also switch to a specific `nomad-north-voila` image tag or different image using `nomad.yaml` configuration file:
+By including `nomad-north-voila` plugin, a `voila` container with a specific image tag (according to the Python package version) will be available in the NORTH tools, but you can also switch to a specific `nomad-north-voila` image tag or different image using the `nomad.yaml` configuration file:
 
 ```yaml
 plugins:
