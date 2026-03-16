@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from nomad.config.models.north import NORTHTool
-from nomad.config.models.plugins import NorthToolEntryPoint
+from nomad.config.models.plugins import NORTHToolEntryPoint
 
 voila_north_tool = NORTHTool(
     short_description='voilà, a Jupyter extension, in NOMAD NORTH integrated by NOMAD plugin nomad-north-voila.',
@@ -33,6 +33,6 @@ voila_north_tool = NORTHTool(
     display_name='voilà',
 )
 
-voila_entry_point = NorthToolEntryPoint(
+voila_entry_point = NORTHToolEntryPoint(
     id_url_safe='voila', north_tool=voila_north_tool
 )
