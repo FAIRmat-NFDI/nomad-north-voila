@@ -22,7 +22,11 @@ voila_north_tool = NORTHTool(
         [Render Jupyter notebooks as standalone web applications](https://github.com/voila-dashboards/voila)""",
     external_mounts=[],
     file_extensions=['ipynb'],
-    icon='https://raw.githubusercontent.com/FAIRmat-NFDI/nomad-north-voila/UpdateVoila/src/nomad_north_voila/north_tools/voila_north_tool/voila-logo.svg',
+    icon=(
+        'https://raw.githubusercontent.com/'
+        'FAIRmat-NFDI/nomad-north-voila/main/'
+        'src/nomad_north_voila/north_tools/voila_north_tool/voila-logo.svg'
+    ),
     image_pull_policy='Always',
     default_url='/lab',
     maintainer=[{'email': 'fairmat@physik.hu-berlin.de', 'name': 'NOMAD Authors'}],

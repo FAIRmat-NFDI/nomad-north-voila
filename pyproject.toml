@@ -146,7 +146,7 @@ version_scheme = "no-guess-dev"
 local_scheme = "node-and-date"
 
 [project.entry-points.'nomad.plugin']
-north_tool_entry_point = "nomad_north_voila.north_tools:voila"
+voila = "nomad_north_voila.north_tools:voila"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues
