@@ -1,5 +1,5 @@
-ARG IMAGE_TAG=lab-3.6.2
-ARG BASE_IMAGE=jupyter/datascience-notebook
+ARG IMAGE_TAG=hub-4.1.5
+ARG BASE_IMAGE=quay.io/jupyter/datascience-notebook
 ARG UV_VERSION=0.9
 ARG PLUGIN_NAME=nomad-north-voila
 

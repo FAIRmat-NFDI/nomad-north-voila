@@ -46,8 +46,9 @@ dev = [
 ]
 [dependency-groups]
 north = [
-    # According to the base image ensure compatibility of other dependencies with this version
-    "jupyterlab==3.6.2",
+    # According to the base image major version,
+    # ensure compatibility of other dependencies with this version
+    "jupyterlab>=4,<5",
     "ipywidgets",
     "voila",
     "ipyaggrid",
